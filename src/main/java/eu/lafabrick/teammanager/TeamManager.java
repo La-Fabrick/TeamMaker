@@ -1,6 +1,10 @@
 package eu.lafabrick.teammanager;
 
+import eu.lafabrick.teammanager.api.team.Team;
+import eu.lafabrick.teammanager.api.team.TeamGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.InvocationTargetException;
 
 public final class TeamManager extends JavaPlugin {
 
