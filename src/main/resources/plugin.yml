@@ -1,0 +1,7 @@
+name: TeamManager
+version: '${version}'
+main: eu.lafabrick.teammanager.TeamManager
+api-version: 1.19
+prefix: TEAM
+authors: [ Anhgelus Morhtuuzh, LaFabrick ]
+description: Create Teams and Manage Teams. Can be used as Library.
