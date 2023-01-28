@@ -1,17 +1,19 @@
 package eu.lafabrick.teammanager.api.team;
 
+import eu.lafabrick.teammanager.api.TeamPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Team {
     public final String name;
     public final ChatColor color;
     public final String prefix;
-    public final List<Player> players;
+    private final List<TeamPlayer> players;
     public final JavaPlugin plugin;
 
     public Team(String name, ChatColor color, String prefix, JavaPlugin plugin) {
@@ -23,20 +25,20 @@ public abstract class Team {
     }
 
     public TeamInfo toInfo() {
-        return new TeamInfo(name, color, prefix, players.stream().map(Player::getName).toArray(String[]::new));
+        return new TeamInfo(name, color, prefix, players.stream().map(TeamPlayer::getUuid).toArray(UUID[]::new));
     }
 
     /**
      * Add a player to the team
      * @param player The player to add
      */
-    public abstract void addPlayer(Player player);
+    public abstract void addPlayer(TeamPlayer player);
 
     /**
      * Remove a player from the team
      * @param player The player to remove
      */
-    public abstract void removePlayer(Player player);
+    public abstract void removePlayer(TeamPlayer player);
 
     /**
      * Generate a string with the team prefix
@@ -44,5 +46,9 @@ public abstract class Team {
      */
     public String generatePrefix() {
         return "["+color+prefix+ChatColor.RESET+"]";
+    }
+
+    public List<TeamPlayer> getPlayers() {
+        return players;
     }
 }
