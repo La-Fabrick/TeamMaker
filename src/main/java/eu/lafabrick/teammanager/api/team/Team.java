@@ -22,6 +22,10 @@ public abstract class Team {
         this.plugin = plugin;
     }
 
+    public TeamInfo toInfo() {
+        return new TeamInfo(name, color, prefix, players.stream().map(Player::getName).toArray(String[]::new));
+    }
+
     /**
      * Add a player to the team
      * @param player The player to add

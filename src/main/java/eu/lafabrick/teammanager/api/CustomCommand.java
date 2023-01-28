@@ -5,19 +5,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class CustomCommand implements CommandExecutor {
     public final String name;
-    public final String description;
-    public final String usage;
     public final String permission;
-    public final String[] aliases;
 
-    public CustomCommand(String name, String description, String usage, String permission, String[] aliases) {
+    public CustomCommand(String name, String permission) {
         this.name = name;
-        this.description = description;
-        this.usage = usage;
         this.permission = permission;
-        this.aliases = aliases;
     }
 
     @Override
@@ -29,21 +28,38 @@ public abstract class CustomCommand implements CommandExecutor {
             return true;
         }
 
-        return execute(player, label, args);
+        if (args.length != 1) {
+            final var list = new ArrayList<>(Arrays.stream(args).toList());
+            list.remove(0);
+            return execute(player, label, list);
+        }
+        return execute(player, label, null);
     }
 
+    /**
+     * Do checks before executing the command
+     * Automatically executed when the command comes
+     * @param player Player who executes the command
+     * @return true if the player passed every check
+     */
     protected boolean checks(Player player) {
-        if (permission.length() == 0) {
+        if (permission.length() == 0 || player.isOp()) {
             return true;
         }
         return player.hasPermission(permission);
     }
 
+    /**
+     * Check if the player has a custom permission
+     * @param player Player to check
+     * @param permission Permission to check
+     * @return true if the player has the permission
+     */
     protected boolean checkCustomPermission(Player player, String permission) {
-        return player.hasPermission(permission);
+        return player.isOp() || player.hasPermission(permission);
     }
 
     protected abstract void helpCommands(Player player);
 
-    protected abstract boolean execute(Player player, String label, String[] args);
+    protected abstract boolean execute(Player player, String label, @Nullable List<String> args);
 }

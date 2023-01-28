@@ -1,0 +1,4 @@
+can-non-ops-join-team: true
+can-non-ops-leave-team: true
+
+default-prefix-size: 3
