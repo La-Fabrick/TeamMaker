@@ -5,12 +5,12 @@ Create Teams and Manage Teams. Can be used as Library.
 ## Installation
 
 Install the lib with gradle:
-```groovy
+```gradle
 repositories {
     maven { url 'https://jitpack.io' }
 }
 ```
-```groovy
+```gradle
 dependencies {
     implementation 'com.github.La-Fabrick:TeamMaker:VERSION'
 }
