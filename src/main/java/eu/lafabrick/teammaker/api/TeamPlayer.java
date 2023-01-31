@@ -1,10 +1,12 @@
 package eu.lafabrick.teammaker.api;
 
+import eu.lafabrick.teammaker.TeamMaker;
 import eu.lafabrick.teammaker.api.team.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -68,9 +70,17 @@ public class TeamPlayer {
         return Bukkit.getPlayer(uuid);
     }
 
-    public TeamPlayer fromPlayer(Player player) {
+    /**
+     * Load TeamPlayer from player
+     * @param player
+     * @return
+     */
+    public static TeamPlayer fromPlayer(Player player) {
         final var pl = new TeamPlayer(player.getName(), player.getUniqueId());
-        // TODO: set team of player
+        final var manager = TeamMaker.getTeamsManager();
+        if (manager.hasTeam(player)) {
+            pl.setTeam(Objects.requireNonNull(manager.getTeam(player)));
+        }
         return pl;
     }
 }
