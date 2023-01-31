@@ -67,7 +67,7 @@ public class TeamGenerator {
      */
     public static Team loadTeam(String name, Class<? extends Team> clazz) throws Exception {
         final var config = new Config(TeamMaker.getInstance(), "teams");
-        final var teamInfo = (TeamInfo) config.get().getConfigurationSection(name).getValues(false);
+        final var teamInfo = (TeamInfo) config.get().get(name, TeamInfo.class);
         return teamInfo.toTeam(clazz, TeamMaker.getInstance());
     }
 }
