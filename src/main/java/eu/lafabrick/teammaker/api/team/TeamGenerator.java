@@ -1,7 +1,7 @@
-package eu.lafabrick.teammanager.api.team;
+package eu.lafabrick.teammaker.api.team;
 
-import eu.lafabrick.teammanager.TeamManager;
-import eu.lafabrick.teammanager.utils.Config;
+import eu.lafabrick.teammaker.TeamMaker;
+import eu.lafabrick.teammaker.utils.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,8 +66,8 @@ public class TeamGenerator {
      * @throws Exception If the team cannot be loaded
      */
     public static Team loadTeam(String name, Class<? extends Team> clazz) throws Exception {
-        final var config = new Config(TeamManager.getInstance(), "teams");
+        final var config = new Config(TeamMaker.getInstance(), "teams");
         final var teamInfo = (TeamInfo) config.get().getConfigurationSection(name).getValues(false);
-        return teamInfo.toTeam(clazz, TeamManager.getInstance());
+        return teamInfo.toTeam(clazz, TeamMaker.getInstance());
     }
 }

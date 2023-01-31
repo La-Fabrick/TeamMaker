@@ -1,4 +1,4 @@
-package eu.lafabrick.teammanager.utils;
+package eu.lafabrick.teammaker.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

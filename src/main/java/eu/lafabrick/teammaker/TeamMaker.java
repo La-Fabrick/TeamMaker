@@ -1,13 +1,13 @@
-package eu.lafabrick.teammanager;
+package eu.lafabrick.teammaker;
 
-import eu.lafabrick.teammanager.api.team.Team;
-import eu.lafabrick.teammanager.api.team.TeamGenerator;
+import eu.lafabrick.teammaker.api.team.Team;
+import eu.lafabrick.teammaker.api.team.TeamGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public final class TeamManager extends JavaPlugin {
+public final class TeamMaker extends JavaPlugin {
 
-    private static TeamManager instance;
+    private static TeamMaker instance;
     /**
      * Default team generator
      */
@@ -31,7 +31,7 @@ public final class TeamManager extends JavaPlugin {
         getLogger().info("TeamManager has been disable!");
     }
 
-    public static TeamManager getInstance() {
+    public static TeamMaker getInstance() {
         return instance;
     }
 
@@ -44,6 +44,6 @@ public final class TeamManager extends JavaPlugin {
      * @param teamGenerator The new team generator
      */
     public static void updateTeamGenerator(TeamGenerator teamGenerator) {
-        TeamManager.teamGenerator = teamGenerator;
+        TeamMaker.teamGenerator = teamGenerator;
     }
 }

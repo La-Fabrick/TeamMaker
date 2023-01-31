@@ -1,4 +1,4 @@
-package eu.lafabrick.teammanager.api;
+package eu.lafabrick.teammaker.api;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,4 +1,4 @@
-# TeamManager
+# TeamMaker
 
 Create Teams and Manage Teams. Can be used as Library.
 

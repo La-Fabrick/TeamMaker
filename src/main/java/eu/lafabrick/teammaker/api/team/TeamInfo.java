@@ -1,6 +1,6 @@
-package eu.lafabrick.teammanager.api.team;
+package eu.lafabrick.teammaker.api.team;
 
-import eu.lafabrick.teammanager.api.TeamPlayer;
+import eu.lafabrick.teammaker.api.TeamPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 

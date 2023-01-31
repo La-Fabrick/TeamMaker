@@ -1,10 +1,10 @@
-package eu.lafabrick.teammanager.commands;
+package eu.lafabrick.teammaker.commands;
 
-import eu.lafabrick.teammanager.TeamManager;
-import eu.lafabrick.teammanager.api.CustomCommand;
-import eu.lafabrick.teammanager.api.team.TeamGenerator;
-import eu.lafabrick.teammanager.utils.Colors;
-import eu.lafabrick.teammanager.utils.Config;
+import eu.lafabrick.teammaker.TeamMaker;
+import eu.lafabrick.teammaker.api.CustomCommand;
+import eu.lafabrick.teammaker.api.team.TeamGenerator;
+import eu.lafabrick.teammaker.utils.Colors;
+import eu.lafabrick.teammaker.utils.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -54,11 +54,11 @@ public class TeamCommand extends CustomCommand {
             player.sendMessage(Colors.ERROR + "Invalid color");
             return;
         }
-        final var size = new Config(TeamManager.getInstance(), "config").get().getInt("default-prefix-size");
+        final var size = new Config(TeamMaker.getInstance(), "config").get().getInt("default-prefix-size");
         player.sendMessage(Colors.INFO + "Default prefix size is "+size+" characters");
         player.sendMessage(Colors.INFO + "Prefix:" + TeamGenerator.generatePrefix(name, color, size));
         try {
-            TeamManager.getTeamGenerator().generateTeam(name, color, size);
+            TeamMaker.getTeamGenerator().generateTeam(name, color, size);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

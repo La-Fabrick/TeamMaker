@@ -1,6 +1,6 @@
-package eu.lafabrick.teammanager.api;
+package eu.lafabrick.teammaker.api;
 
-import eu.lafabrick.teammanager.api.team.Team;
+import eu.lafabrick.teammaker.api.team.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -66,5 +66,11 @@ public class TeamPlayer {
             throw new IllegalStateException("Player is not connected");
         }
         return Bukkit.getPlayer(uuid);
+    }
+
+    public TeamPlayer fromPlayer(Player player) {
+        final var pl = new TeamPlayer(player.getName(), player.getUniqueId());
+        // TODO: set team of player
+        return pl;
     }
 }
