@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Create rapidly a command
+ */
 public abstract class CustomCommand implements CommandExecutor {
     public final String name;
     public final String permission;
@@ -59,7 +62,18 @@ public abstract class CustomCommand implements CommandExecutor {
         return player.isOp() || player.hasPermission(permission);
     }
 
+    /**
+     * Send the help commands to the player
+     * @param player Player to send the help commands
+     */
     protected abstract void helpCommands(Player player);
 
+    /**
+     * Execute the command
+     * @param player Player who executes the command
+     * @param label Command label
+     * @param args Command arguments
+     * @return true if the command was executed successfully
+     */
     protected abstract boolean execute(Player player, String label, @Nullable List<String> args);
 }

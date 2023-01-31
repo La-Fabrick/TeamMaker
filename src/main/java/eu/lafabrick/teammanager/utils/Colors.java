@@ -4,6 +4,9 @@ import org.bukkit.ChatColor;
 
 import javax.annotation.Nullable;
 
+/**
+ * Colors of commands
+ */
 public enum Colors {
     ERROR(ChatColor.RED, null),
     SUCCESS(ChatColor.GREEN, null),

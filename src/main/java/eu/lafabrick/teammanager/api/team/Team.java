@@ -2,13 +2,15 @@ package eu.lafabrick.teammanager.api.team;
 
 import eu.lafabrick.teammanager.api.TeamPlayer;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Team base class
+ */
 public abstract class Team {
     public final String name;
     public final ChatColor color;

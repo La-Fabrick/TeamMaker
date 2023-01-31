@@ -39,6 +39,10 @@ public final class TeamManager extends JavaPlugin {
         return teamGenerator;
     }
 
+    /**
+     * Update the team generator
+     * @param teamGenerator The new team generator
+     */
     public static void updateTeamGenerator(TeamGenerator teamGenerator) {
         TeamManager.teamGenerator = teamGenerator;
     }

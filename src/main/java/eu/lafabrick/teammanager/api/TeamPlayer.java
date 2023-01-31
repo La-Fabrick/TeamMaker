@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+/**
+ * Player class
+ */
 public class TeamPlayer {
     @Nullable
     private String name;
