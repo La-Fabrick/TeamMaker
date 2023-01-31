@@ -19,7 +19,13 @@ public class TeamCommand extends CustomCommand {
 
     @Override
     protected void helpCommands(Player player) {
-
+        player.sendMessage(Colors.INFO + "Team commands:" +
+                "/team create <name> <color> - Create a team" +
+                "/team delete <name> - Delete a team" +
+                "/team join <name> - Join a team" +
+                "/team leave - Leave your team" +
+                "/team list - List all teams" +
+                "/team info <name> - Get info about a team");
     }
 
     @Override
