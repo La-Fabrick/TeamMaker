@@ -32,6 +32,10 @@ public abstract class CustomCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
+            if (args[1].equals("help")) {
+                helpCommands(player);
+                return true;
+            }
             final var list = new ArrayList<>(Arrays.stream(args).toList());
             list.remove(0);
             return execute(player, label, list);
