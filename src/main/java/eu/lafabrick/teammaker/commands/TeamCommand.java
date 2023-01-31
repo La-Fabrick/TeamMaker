@@ -58,7 +58,7 @@ public class TeamCommand extends CustomCommand {
         player.sendMessage(Colors.INFO + "Default prefix size is "+size+" characters");
         player.sendMessage(Colors.INFO + "Prefix:" + TeamGenerator.generatePrefix(name, color, size));
         try {
-            TeamMaker.getTeamGenerator().generateTeam(name, color, size);
+            TeamMaker.getTeamsManager().getTeamGenerator().generateTeam(name, color, size);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

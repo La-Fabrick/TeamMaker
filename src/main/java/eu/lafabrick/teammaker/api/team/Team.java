@@ -53,4 +53,12 @@ public abstract class Team {
     public List<TeamPlayer> getPlayers() {
         return players;
     }
+
+    public void saveToConfig() {
+        TeamGenerator.saveTeam(this);
+    }
+
+    public void deleteFromConfig() {
+        TeamGenerator.deleteTeam(this);
+    }
 }
