@@ -1,0 +1,41 @@
+name: build
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout project sources
+          uses: actions/checkout@v2
+        - name: Setup Gradle
+          uses: gradle/gradle-build-action@v2
+        - name: Gradle Build Jar
+          id: build
+          run: ./gradlew build jar
+        - name: release
+          uses: actions/create-release@v1
+          id: create_release
+          with:
+            draft: false
+            prerelease: true
+            release_name: ${{ steps.version.outputs.version }}
+            tag_name: ${{ github.ref }}
+            body: 'https://github.com/La-Fabrick/TeamMaker/commits/${{ github.ref }}'
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+        - name: Upload Release Asset
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+          with:
+            upload_url: ${{ steps.build.outputs.upload_url }}
+            asset_path: ./build/libs/TeamManager-${{ github.ref }}.jar
+            asset_name: TeamManager-${{ github.ref }}.jar
+            asset_content_type: application/jar
