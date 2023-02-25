@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeamCommand extends CustomCommand {
     public final static List<String> subCommands = List.of("create", "delete", "join", "leave", "list", "info");
@@ -26,8 +27,8 @@ public class TeamCommand extends CustomCommand {
         player.sendMessage(Colors.INFO + "Team commands:" +
                 "/team create <name> <color> - Create a team" +
                 "/team delete <name> - Delete a team" +
-                "/team join <name> - Join a team" +
-                "/team leave - Leave your team" +
+                "/team join <name> [player] - Join a team" +
+                "/team leave [player] - Leave a team" +
                 "/team list - List all teams" +
                 "/team info <name> - Get info about a team");
     }
@@ -42,6 +43,9 @@ public class TeamCommand extends CustomCommand {
             case "create" -> createTeam(player, args);
             case "delete" -> deleteTeam(player, args);
             case "join" -> joinTeam(player, args);
+            case "leave" -> leaveTeam(player, args);
+            case "list" -> listTeam(player);
+            case "info" -> infoTeam(player, args);
             default -> helpCommands(player);
         }
         return true;
@@ -95,7 +99,7 @@ public class TeamCommand extends CustomCommand {
 
     private void joinTeam(Player player, List<String> args) {
         final var size = args.size();
-        if (size == 2 || size == 3) {
+        if (!(size == 2 || size == 3)) {
             player.sendMessage(Colors.WARNING + "/team join <name> [player]");
             return;
         }
@@ -116,6 +120,60 @@ public class TeamCommand extends CustomCommand {
         }
         team.addPlayer(TeamPlayer.fromPlayer(target));
         player.sendMessage(Colors.INFO + target.getName() + " joined the team");
+    }
+
+    private void leaveTeam(Player player, List<String> args) {
+        final var size = args.size();
+        if (!(size == 1 || size == 2)) {
+            player.sendMessage(Colors.WARNING + "/team leave [player]");
+            return;
+        }
+        final var manager = TeamMaker.getTeamsManager();
+        var target = player;
+        if (size == 2) {
+            target = Bukkit.getPlayer(args.get(1));
+            if (target == null) {
+                player.sendMessage(Colors.ERROR + "Player not found");
+                return;
+            }
+        }
+        final var team = manager.getTeam(player);
+        if (team == null) {
+            player.sendMessage(Colors.ERROR + "This player doesn't have a team");
+            return;
+        }
+        team.removePlayer(TeamPlayer.fromPlayer(target));
+        player.sendMessage(Colors.INFO + target.getName() + " left the team");
+    }
+
+    private void listTeam(Player player) {
+        final var manager = TeamMaker.getTeamsManager();
+        final var teams = (List<Team>) manager.getTeams();
+        if (teams.isEmpty()) {
+            player.sendMessage(Colors.INFO + "No team found");
+            return;
+        }
+        player.sendMessage(Colors.INFO + "Teams:");
+        for (final var team : teams) {
+            player.sendMessage(Colors.INFO + team.name + " - " + team.generatePrefix());
+        }
+    }
+
+    private void infoTeam(Player player, List<String> args) {
+        if (args.size() != 2) {
+            player.sendMessage(Colors.WARNING + "/team info <name>");
+            return;
+        }
+        final var name = args.get(1);
+        final var team = getTeam(name);
+        if (team == null) {
+            player.sendMessage(Colors.ERROR + "Team not found");
+            return;
+        }
+        player.sendMessage(Colors.INFO + "Team info:\n" +
+                "Name: " + team.name + "\n"+
+                "Prefix: " + team.generatePrefix() +"\n"+
+                "Players: " + team.getPlayers().stream().map(TeamPlayer::getName).collect(Collectors.joining(", ")));
     }
 
     @Nullable
