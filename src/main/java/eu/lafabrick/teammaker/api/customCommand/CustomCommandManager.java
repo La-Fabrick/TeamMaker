@@ -2,6 +2,11 @@ package eu.lafabrick.teammaker.api.customCommand;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Custom command manager.
+ * Use {@link CustomCommandManager#register(JavaPlugin)} to register all commands.
+ * Don't forget to use {@link CustomCommandManager#clear()} after registering.
+ */
 public class CustomCommandManager {
     private static CustomCommandList commands = new CustomCommandList();
 

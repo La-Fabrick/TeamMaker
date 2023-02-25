@@ -30,6 +30,8 @@ public final class TeamMaker extends JavaPlugin {
 
         CustomCommandManager.register(this);
 
+        CustomCommandManager.clear();
+
         getLogger().info("TeamManager has been enabled!");
     }
 
