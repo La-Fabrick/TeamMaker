@@ -1,9 +1,10 @@
-package eu.lafabrick.teammaker.api;
+package eu.lafabrick.teammaker.api.customCommand;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -64,6 +65,14 @@ public abstract class CustomCommand implements CommandExecutor {
      */
     protected boolean checkCustomPermission(Player player, String permission) {
         return player.isOp() || player.hasPermission(permission);
+    }
+
+    /**
+     * Register the command
+     * @param plugin Plugin of the command
+     */
+    public void register(JavaPlugin plugin) {
+        plugin.getCommand(name).setExecutor(this);
     }
 
     /**

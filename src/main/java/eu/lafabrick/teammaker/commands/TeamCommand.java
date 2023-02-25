@@ -1,7 +1,7 @@
 package eu.lafabrick.teammaker.commands;
 
 import eu.lafabrick.teammaker.TeamMaker;
-import eu.lafabrick.teammaker.api.CustomCommand;
+import eu.lafabrick.teammaker.api.customCommand.CustomCommand;
 import eu.lafabrick.teammaker.api.team.TeamGenerator;
 import eu.lafabrick.teammaker.utils.Colors;
 import eu.lafabrick.teammaker.utils.Config;
