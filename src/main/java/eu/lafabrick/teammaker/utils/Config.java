@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * @author Robotv2
+ * @author Robotv2, Anhgelus Morhtuuzh
  */
 public class Config {
     private final Plugin main;
@@ -38,11 +37,10 @@ public class Config {
      */
     public void setup() {
         if (this.database == null) database = new File(main.getDataFolder(), name + ".yml");
-        if (!database.exists()) {
-            if (database.getParentFile().exists()) database.getParentFile().mkdir();
-            main.saveResource(name + ".yml", false);
-            firstLoad = true;
-        }
+        if (database.exists()) return;
+        if (database.getParentFile().exists()) database.getParentFile().mkdir();
+        main.saveResource(name + ".yml", false);
+        firstLoad = true;
     }
 
     /**
@@ -62,7 +60,7 @@ public class Config {
         try {
             get().save(database);
         } catch (IOException e) {
-            final Logger logger = main.getLogger();
+            final var logger = main.getLogger();
             logger.log(Level.SEVERE, "Error when saving the file " + name + ".yml");
             logger.log(Level.SEVERE, "This is a bug, please report it to the developer", e);
             logger.warning(e.getMessage());
@@ -79,7 +77,7 @@ public class Config {
 
         InputStream defaultStream = main.getResource(name + ".yml");
         if (defaultStream != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+            final var defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             this.databaseConfig.setDefaults(defaultConfig);
         }
     }
