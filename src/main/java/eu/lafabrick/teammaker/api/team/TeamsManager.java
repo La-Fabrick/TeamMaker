@@ -66,6 +66,23 @@ public class TeamsManager<T extends Team> {
         return getTeam(TeamPlayer.fromPlayer(player));
     }
 
+    @Nullable
+    public T getTeam(String name) {
+        for (T team : teams) {
+            if (team.name.equals(name)) return team;
+        }
+        return null;
+    }
+
+    /**
+     * Check if the type is a team type
+     * @param type The type to check
+     * @return true if the type is a team type
+     */
+    public boolean isTeamType(Class<?> type) {
+        return type == teams.getClass();
+    }
+
     public void reloadFromConfig(Config config) {
         teams.clear();
         for (Object o : config.get().getValues(false).values()) {

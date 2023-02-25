@@ -2,12 +2,14 @@ package eu.lafabrick.teammaker.commands;
 
 import eu.lafabrick.teammaker.TeamMaker;
 import eu.lafabrick.teammaker.api.customCommand.CustomCommand;
+import eu.lafabrick.teammaker.api.team.Team;
 import eu.lafabrick.teammaker.api.team.TeamGenerator;
 import eu.lafabrick.teammaker.utils.Colors;
 import eu.lafabrick.teammaker.utils.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class TeamCommand extends CustomCommand {
@@ -36,6 +38,7 @@ public class TeamCommand extends CustomCommand {
         }
         switch (args.get(0)) {
             case "create" -> createTeam(player, args);
+            case "delete" -> deleteTeam(player, args);
             default -> helpCommands(player);
         }
         return true;
@@ -60,7 +63,39 @@ public class TeamCommand extends CustomCommand {
         try {
             TeamMaker.getTeamsManager().getTeamGenerator().generateTeam(name, color, size);
         } catch (Exception e) {
+            Colors.errorOccurred(player);
             throw new RuntimeException(e);
         }
+        player.sendMessage(Colors.INFO + "Team created");
+    }
+
+    private void deleteTeam(Player player, List<String> args) {
+        if (args.size() != 2) {
+            player.sendMessage(Colors.WARNING + "/team delete <name> ");
+            return;
+        }
+        final var manager = TeamMaker.getTeamsManager();
+        final var name = args.get(1);
+        final var team = getTeam(name);
+        if (team == null) {
+            player.sendMessage(Colors.ERROR + "Team not found");
+            return;
+        }
+        if (!manager.isTeamType(team.getClass())) {
+            Colors.errorOccurred(player);
+            throw new IllegalArgumentException("Team type not supported");
+        }
+        try {
+            manager.removeTeam(team);
+        } catch (Exception e) {
+            Colors.errorOccurred(player);
+            throw new RuntimeException(e);
+        }
+        player.sendMessage(Colors.INFO + "Team deleted");
+    }
+
+    @Nullable
+    private Team getTeam(String name) {
+        return TeamMaker.getTeamsManager().getTeam(name);
     }
 }
