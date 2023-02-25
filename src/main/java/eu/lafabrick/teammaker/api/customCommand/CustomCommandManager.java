@@ -17,6 +17,17 @@ public class CustomCommandManager {
         return commands.contains(command);
     }
 
+    /**
+     * Clear the list
+     */
+    public static void clear() {
+        commands.clear();
+    }
+
+    /**
+     * Register all commands
+     * @param plugin The plugin
+     */
     public static void register(JavaPlugin plugin) {
         commands.register(plugin);
     }

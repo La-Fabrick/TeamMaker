@@ -1,8 +1,10 @@
 package eu.lafabrick.teammaker;
 
+import eu.lafabrick.teammaker.api.customCommand.CustomCommandManager;
 import eu.lafabrick.teammaker.api.team.Team;
 import eu.lafabrick.teammaker.api.team.TeamGenerator;
 import eu.lafabrick.teammaker.api.team.TeamsManager;
+import eu.lafabrick.teammaker.commands.TeamCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -23,6 +25,10 @@ public final class TeamMaker extends JavaPlugin {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+
+        CustomCommandManager.add(new TeamCommand());
+
+        CustomCommandManager.register(this);
 
         getLogger().info("TeamManager has been enabled!");
     }
