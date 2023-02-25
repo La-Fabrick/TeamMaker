@@ -1,11 +1,13 @@
 package eu.lafabrick.teammaker.commands;
 
 import eu.lafabrick.teammaker.TeamMaker;
+import eu.lafabrick.teammaker.api.TeamPlayer;
 import eu.lafabrick.teammaker.api.customCommand.CustomCommand;
 import eu.lafabrick.teammaker.api.team.Team;
 import eu.lafabrick.teammaker.api.team.TeamGenerator;
 import eu.lafabrick.teammaker.utils.Colors;
 import eu.lafabrick.teammaker.utils.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -39,6 +41,7 @@ public class TeamCommand extends CustomCommand {
         switch (args.get(0)) {
             case "create" -> createTeam(player, args);
             case "delete" -> deleteTeam(player, args);
+            case "join" -> joinTeam(player, args);
             default -> helpCommands(player);
         }
         return true;
@@ -81,10 +84,6 @@ public class TeamCommand extends CustomCommand {
             player.sendMessage(Colors.ERROR + "Team not found");
             return;
         }
-        if (!manager.isTeamType(team.getClass())) {
-            Colors.errorOccurred(player);
-            throw new IllegalArgumentException("Team type not supported");
-        }
         try {
             manager.removeTeam(team);
         } catch (Exception e) {
@@ -92,6 +91,31 @@ public class TeamCommand extends CustomCommand {
             throw new RuntimeException(e);
         }
         player.sendMessage(Colors.INFO + "Team deleted");
+    }
+
+    private void joinTeam(Player player, List<String> args) {
+        final var size = args.size();
+        if (size == 2 || size == 3) {
+            player.sendMessage(Colors.WARNING + "/team join <name> [player]");
+            return;
+        }
+        final var manager = TeamMaker.getTeamsManager();
+        final var name = args.get(1);
+        final var team = getTeam(name);
+        if (team == null) {
+            player.sendMessage(Colors.ERROR + "Team not found");
+            return;
+        }
+        var target = player;
+        if (size == 3) {
+            target = Bukkit.getPlayer(args.get(2));
+            if (target == null) {
+                player.sendMessage(Colors.ERROR + "Player not found");
+                return;
+            }
+        }
+        team.addPlayer(TeamPlayer.fromPlayer(target));
+        player.sendMessage(Colors.INFO + target.getName() + " joined the team");
     }
 
     @Nullable
