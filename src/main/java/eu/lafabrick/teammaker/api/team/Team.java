@@ -15,7 +15,7 @@ public abstract class Team {
     public final String name;
     public final ChatColor color;
     public final String prefix;
-    private final List<TeamPlayer> players;
+    protected final List<TeamPlayer> players;
     public final JavaPlugin plugin;
 
     public Team(String name, ChatColor color, String prefix, JavaPlugin plugin) {
