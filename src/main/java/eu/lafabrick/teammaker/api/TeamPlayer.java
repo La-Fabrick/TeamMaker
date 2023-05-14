@@ -29,9 +29,19 @@ public class TeamPlayer {
     }
 
     public void setTeam(Team team) {
-        team.removePlayer(this);
-        this.team.addPlayer(this);
+		if (this.team != null) {
+			this.team.removePlayer(this);
+		}
+        team.addPlayer(this);
         this.team = team;
+    }
+
+	/**
+	 * Remove the player from his actual team
+	 */
+    public void removeTeam() {
+        team.removePlayer(this);
+        this.team = null;
     }
 
     @Nullable
